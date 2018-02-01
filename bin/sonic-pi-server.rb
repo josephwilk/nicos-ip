@@ -15,7 +15,6 @@
 require 'cgi'
 require 'rbconfig'
 
-
 require_relative "../core.rb"
 require_relative "../sonicpi/lib/sonicpi/studio"
 
@@ -33,8 +32,6 @@ require "/Users/josephwilk/Workspace/repl-electric/live-coding-space/lib/midi.rb
 require 'multi_json'
 require 'memoist'
 
-STDOUT.puts "Sonic Pi server booting..."
-
 include SonicPi::Util
 
 protocol = case ARGV[0]
@@ -43,8 +40,6 @@ protocol = case ARGV[0]
            else
              :udp
            end
-STDOUT.puts "Using protocol: #{protocol}"
-STDOUT.puts "Detecting port numbers..."
 
 server_port = ARGV[1] ? ARGV[1].to_i : 4557
 client_port = ARGV[2] ? ARGV[2].to_i : 4558
@@ -59,7 +54,6 @@ check_port = lambda do |port, gui|
   begin
     s = SonicPi::OSC::UDPServer.new(port)
     s.stop
-    STDOUT.puts "  - OK"
   rescue Exception => e
     begin
       STDOUT.puts "Port #{port} unavailable. Perhaps Sonic Pi is already running?"
@@ -71,9 +65,6 @@ check_port = lambda do |port, gui|
     exit
   end
 end
-
-
-STDOUT.puts "Send port: #{client_port}"
 
 begin
   if protocol == :tcp
@@ -89,19 +80,12 @@ rescue Exception => e
 end
 
 
-STDOUT.puts "Listen port: #{server_port}"
 check_port.call(server_port, gui)
-STDOUT.puts "Scsynth port: #{scsynth_port}"
 check_port.call(scsynth_port, gui)
-STDOUT.puts "Scsynth send port: #{scsynth_send_port}"
 check_port.call(scsynth_send_port, gui)
-STDOUT.puts "OSC cues port: #{osc_cues_port}"
 check_port.call(osc_cues_port, gui)
-STDOUT.puts "Erlang port: #{erlang_port}"
 check_port.call(erlang_port, gui)
-STDOUT.puts "OSC MIDI out port: #{osc_midi_out_port}"
 check_port.call(osc_midi_out_port, gui)
-STDOUT.puts "OSC MIDI in port: #{osc_midi_in_port}"
 check_port.call(osc_midi_in_port, gui)
 
 STDOUT.flush
@@ -114,7 +98,6 @@ sonic_pi_ports = {
   erlang_port: erlang_port,
   osc_midi_out_port: osc_midi_out_port,
   osc_midi_in_port: osc_midi_in_port }.freeze
-
 
 begin
   if protocol == :tcp
@@ -230,7 +213,7 @@ end
 REPL_ELECTRIC_SETUP = "use_cue_logging false #__nosave__\n" +
     "use_debug false  #__nosave__\n" +
     "use_midi_defaults port: :iac_bus_1, channel: 1 #__nosave__\n" +
-  #  + "♥️=Straw  #__nosave__\n"+
+#  + "♥️=Straw  #__nosave__\n"+
 #    + "🌶️=Straw #__nosave__\n" +
 #    "☠️=@slices #__nosave__\n" +
     "@points ||= 0 #__nosave__\n" +
@@ -578,9 +561,19 @@ out_t = Thread.new do
   end
 end
 
-puts "This is Sonic Pi #{sp.__current_version} running on #{os} with ruby api #{RbConfig::CONFIG['ruby_version']}."
-puts "Sonic Pi Server successfully booted."
+puts "
 
+ ███▄    █  ██▓ ▄████▄   ▒█████    ██████  ██▓ ██▓███
+ ██ ▀█   █ ▓██▒▒██▀ ▀█  ▒██▒  ██▒▒██    ▒ ▓██▒▓██░  ██▒
+▓██  ▀█ ██▒▒██▒▒▓█    ▄ ▒██░  ██▒░ ▓██▄   ▒██▒▓██░ ██▓▒
+▓██▒  ▐▌██▒░██░▒▓▓▄ ▄██▒▒██   ██░  ▒   ██▒░██░▒██▄█▓▒ ▒
+▒██░   ▓██░░██░▒ ▓███▀ ░░ ████▓▒░▒██████▒▒░██░▒██▒ ░  ░
+░ ▒░   ▒ ▒ ░▓  ░ ░▒ ▒  ░░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░░▓  ▒▓▒░ ░  ░
+░ ░░   ░ ▒░ ▒ ░  ░  ▒     ░ ▒ ▒░ ░ ░▒  ░ ░ ▒ ░░▒ ░
+   ░   ░ ░  ▒ ░░        ░ ░ ░ ▒  ░  ░  ░   ▒ ░░░
+         ░  ░  ░ ░          ░ ░        ░   ░
+               ░
+"
 STDOUT.flush
 
 out_t.join
