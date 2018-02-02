@@ -8,7 +8,15 @@ I was once Sonic Pi but corruption came.
 I am now something else.
 ```
 
-### Running
+## Why?
+
+* I can do things Sonic Pi cannot.
+* I have syntax Sonic Pi does not support.
+* I'm free from the QT GUI. 
+* I'm optimised for brevity.
+* I am streamlined for live performance.
+
+## Running
 
 Nicosip is a service that expects an editor to connect. Such as Emacs (https://github.com/repl-electric/sonic-pi.el)
 
