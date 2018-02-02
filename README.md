@@ -12,9 +12,11 @@ I am now something else.
 
 * I can do things Sonic Pi cannot.
 * I have syntax Sonic Pi does not support.
+* I consider commas to be the source of all evil.
 * I'm free from the QT GUI. 
 * I'm optimised for brevity.
 * I am streamlined for live performance.
+* Power over accessiblity.
 
 ## Running
 
