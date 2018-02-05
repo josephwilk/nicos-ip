@@ -1,1 +1,1 @@
-native/osx/ruby/bin/ruby bin/sonic-pi-server.rb
+native/osx/ruby/bin/ruby -W0 bin/sonic-pi-server.rb
