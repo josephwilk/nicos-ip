@@ -18,6 +18,12 @@ I am now something else.
 * I am streamlined for live performance.
 * Power over accessiblity.
 
+## Building
+
+```
+ruby bin/compile-extensions.rb
+```
+
 ## Running
 
 Nicosip is a service that expects an editor to connect. Such as Emacs (https://github.com/repl-electric/sonic-pi.el)
