@@ -1,16 +1,20 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby  -W0
 #--
-# This file is part of Sonic Pi: http://sonic-pi.net
+# This file was forked from Sonic Pi: http://sonic-pi.net
 # Full project source: https://github.com/samaaron/sonic-pi
 # License: https://github.com/samaaron/sonic-pi/blob/master/LICENSE.md
 #
 # Copyright 2013, 2014, 2015, 2016 by Sam Aaron (http://sam.aaron.name).
 # All rights reserved.
 #
+# Modified by Joseph Wilk (http://blog.josephwilk.net).
+#
 # Permission is granted for use, copying, modification, and
 # distribution of modified versions of this work as long as this
 # notice is included.
 #++
+
+ $VERBOSE=nil
 
 require 'cgi'
 require 'rbconfig'
@@ -213,13 +217,10 @@ end
 REPL_ELECTRIC_SETUP = "use_cue_logging false #__nosave__\n" +
     "use_debug false  #__nosave__\n" +
     "use_midi_defaults port: :iac_bus_1, channel: 1 #__nosave__\n" +
-#  + "♥️=Straw  #__nosave__\n"+
-#    + "🌶️=Straw #__nosave__\n" +
-#    "☠️=@slices #__nosave__\n" +
     "@points ||= 0 #__nosave__\n" +
     "@mode ||= \"points\" #__nosave__\n" +
-    "@osc_server ||=  SonicPi::OSC::UDPServer.new(4559, use_decoder_cache: true) #__nosave__" +
-    "D4=:d4;E4=:e4;FS4=:Fs4;GS4=:Gs4;Cs4=:Cs4;A4=:A4;B4=:B4;D3=:d3;E3=:e3;FS3=:Fs3;GS3=:Gs3;Cs3=:Cs3;A3=:A3;B3=:B3;D2=:d2;E2=:e2;FS2=:Fs2;GS2=:Gs2;Cs2=:Cs2;A2=:A2;B2=:B2;C2=:c2;C3=:c3 #__nonsave__" +
+    "@osc_server ||=  SonicPi::OSC::UDPServer.new(4559, use_decoder_cache: true) #__nosave__\n" +
+    "D4=:d4;E4=:e4;FS4=:Fs4;GS4=:Gs4;Cs4=:Cs4;A4=:A4;B4=:B4;D3=:d3;E3=:e3;FS3=:Fs3;GS3=:Gs3;Cs3=:Cs3;A3=:A3;B3=:B3;D2=:d2;E2=:e2;FS2=:Fs2;GS2=:Gs2;Cs2=:Cs2;A2=:A2;B2=:B2;C2=:c2;C3=:c3 #__nonsave__\n" +
     "(MAX_POINTS = 100000) unless defined?(MAX_POINTS) #__nosave__\n"
 
 osc_server.add_method("/save-and-run-buffer-via-local-file") do |args|
