@@ -26,7 +26,6 @@ require_relative "../sonicpi/lib/sonicpi/server"
 require_relative "../sonicpi/lib/sonicpi/util"
 require_relative "../sonicpi/lib/sonicpi/osc/osc"
 require_relative "../sonicpi/lib/sonicpi/lang/core"
-require_relative "../sonicpi/lib/sonicpi/lang/minecraftpi"
 require_relative "../sonicpi/lib/sonicpi/lang/midi"
 require_relative "../sonicpi/lib/sonicpi/lang/sound"
 #require_relative "../sonicpi/lib/sonicpi/lang/pattern"
@@ -160,7 +159,6 @@ klass = Object.const_set name, Class.new(SonicPi::Runtime)
 klass.send(:include, user_methods)
 klass.send(:include, SonicPi::Lang::Core)
 klass.send(:include, SonicPi::Lang::Sound)
-klass.send(:include, SonicPi::Lang::Minecraft)
 klass.send(:include, SonicPi::Lang::Midi)
 klass.send(:include, SonicPi::Lang::Support::DocSystem)
 klass.send(:include, ReplElectric::Midi)
