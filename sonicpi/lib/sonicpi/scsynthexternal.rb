@@ -112,8 +112,6 @@ module SonicPi
         server_log "Server already booted..."
         return false
       end
-      puts "Booting server..."
-
       @osc_server = OSC::UDPServer.new(0, use_decoder_cache: true, use_encoder_cache: true)
 
       @osc_server.add_global_method do |address, args|
@@ -162,12 +160,7 @@ module SonicPi
     end
 
     def log_boot_msg
-      puts ""
-      puts ""
-      puts "Booting Sonic Pi"
-      puts "----------------"
-      puts ""
-      log "\n\n\n"
+      log "\n\n"
     end
 
     def scsynth_path
@@ -270,8 +263,6 @@ module SonicPi
     def boot_server_osx
       disable_input = false
       log_boot_msg
-      puts "Boot - Booting on OS X"
-      puts "Boot - Checkout audio rates on OSX:"
       # Force sample rate for both input and output to 44k
       # If these are not identical, then scsynth will refuse
       # to boot.
@@ -305,8 +296,6 @@ module SonicPi
             puts "Boot - Sample rates still do not match, disabling input"
             disable_input = true
           end
-        else
-          puts "Boot - Sample rates match, we may continue to boot..."
         end
 
       rescue Exception
