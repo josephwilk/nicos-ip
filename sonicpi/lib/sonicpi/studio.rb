@@ -171,10 +171,6 @@ module SonicPi
 
         success = o2m_success && m2o_success
         @midi_on = success
-
-        unless silent
-          message "Initialised MIDI subsystems" if success
-        end
       end
     end
 
@@ -597,7 +593,7 @@ module SonicPi
     end
 
     def log_message(s)
-      s = "Studio - #{s}"
+      s = "[Studio] - #{s}"
       Kernel.puts s
       log s
     end
@@ -667,7 +663,7 @@ module SonicPi
       success = true
       begin
         m2o_spawn_cmd = "'#{osmid_m2o_path}'" + " -b -o #{@midi_osc_in_port} -m 6 'Sonic Pi'"
-        Kernel.puts "#{m2o_spawn_cmd}"
+        log_message "#{m2o_spawn_cmd}"
         @m2o_pid = spawn(m2o_spawn_cmd, out: osmid_m2o_log_path, err: osmid_m2o_log_path)
         register_process(@m2o_pid)
       rescue Exception => e
@@ -685,7 +681,7 @@ module SonicPi
       success = true
       begin
         o2m_spawn_cmd = "'#{osmid_o2m_path}'" + " -b -i #{@midi_osc_out_port} -O #{@midi_osc_in_port} -m 6"
-        Kernel.puts "#{o2m_spawn_cmd}"
+        log_message "#{o2m_spawn_cmd}"
         @o2m_pid = spawn(o2m_spawn_cmd, out: osmid_o2m_log_path, err: osmid_o2m_log_path)
         register_process(@o2m_pid)
       rescue Exception => e

@@ -181,8 +181,8 @@ module SonicPi
     end
 
     def boot_and_wait(*args)
-      puts "Boot - Starting the SuperCollider server..."
-      puts "Boot - #{args.join(' ')}"
+      puts "[Boot] Starting the SuperCollider server..."
+      puts "[Boot] #{args.join(' ')}"
       p = Promise.new
       p2 = Promise.new
 
@@ -216,7 +216,7 @@ module SonicPi
       rescue PromiseTimeoutError => e
         kill_and_deregister_process(@scsynth_id)
         t1.kill
-        msg = "Boot - Unable to boot SuperCollider - boot server log did not report server ready"
+        msg = "[Boot] Unable to boot SuperCollider - boot server log did not report server ready"
         puts msg
         raise msg
       end
@@ -232,7 +232,7 @@ module SonicPi
           begin
             boot_s.send(@hostname, @send_port, "/status")
           rescue Exception => e
-            puts "Boot - Error sending /status to server: #{e.message}"
+            puts "[Boot] Error sending /status to server: #{e.message}"
           end
           sleep 2
         end
@@ -248,8 +248,8 @@ module SonicPi
       end
 
       unless connected
-        puts "Boot - Unable to connect to SuperCollider"
-        raise "Boot - Unable to connect to SuperCollider"
+        puts "[Boot] Unable to connect to SuperCollider"
+        raise "[Boot] Unable to connect to SuperCollider"
       end
     end
 
@@ -265,12 +265,12 @@ module SonicPi
         require 'coreaudio'
         audio_in_rate = CoreAudio.default_input_device.nominal_rate
         audio_out_rate = CoreAudio.default_output_device.nominal_rate
-        puts "Boot - Input audio rate: #{audio_in_rate}"
-        puts "Boot - Output audio rate: #{audio_out_rate}"
+        puts "[Boot] Input audio rate: #{audio_in_rate}"
+        puts "[Boot] Output audio rate: #{audio_out_rate}"
         if (audio_in_rate != :unknown_in_rate) && (audio_out_rate != :unknown_out_rate) && (audio_in_rate != audio_out_rate)
-          puts "Boot - Audio input and output rates do not match."
+          puts "[Boot] Audio input and output rates do not match."
           if audio_out_rate > 44000
-            puts "Boot - Attempting to set the input rates to match output rate of #{audio_out_rate}..."
+            puts "[Boot] Attempting to set the input rates to match output rate of #{audio_out_rate}..."
             CoreAudio.default_input_device(nominal_rate: audio_out_rate)
           end
 
@@ -278,15 +278,15 @@ module SonicPi
           audio_out_rate = CoreAudio.default_output_device.nominal_rate
 
           if (audio_in_rate != :unknown_in_rate) && (audio_out_rate != :unknown_out_rate) && (audio_in_rate != audio_out_rate)
-            puts "Boot - Attempting to set both in and out sample rates to 44100.0..."
+            puts "[Boot] Attempting to set both in and out sample rates to 44100.0..."
             CoreAudio.default_output_device(nominal_rate: 44100.0)
             CoreAudio.default_input_device(nominal_rate: 44100.0)
           end
 
-          puts "Boot - Input audio rate now: #{audio_in_rate}"
-          puts "Boot - Output audio rate now: #{audio_out_rate}"
+          puts "[Boot] Input audio rate now: #{audio_in_rate}"
+          puts "[Boot] Output audio rate now: #{audio_out_rate}"
           if (audio_in_rate != :unknown_in_rate) && (audio_out_rate != :unknown_out_rate) && (audio_in_rate != audio_out_rate)
-            puts "Boot - Sample rates still do not match, disabling input"
+            puts "[Boot] Sample rates still do not match, disabling input"
             disable_input = true
           end
         end
@@ -296,9 +296,9 @@ module SonicPi
           # Something went wrong whilst attempting to determine and modify the audio
           # rates. Given that there's a chance the rates are correct, try and continue
           # to boot and let scsynth throw a wobbly if things aren't in order.
-          puts "Boot - Unable to detect input and output audio rates. Continuing in the hope that they are actually the same..."
+          puts "[Boot] Unable to detect input and output audio rates. Continuing in the hope that they are actually the same..."
         elsif (audio_in_rate == :unknown_in_rate)
-          puts "Boot - Unable to detect input audio rate. Disabling input"
+          puts "[Boot] Unable to detect input audio rate. Disabling input"
           disable_input = true
         end
       end
