@@ -221,11 +221,7 @@ module SonicPi
         raise msg
       end
 
-      puts "Boot - SuperCollider booted successfully."
-      puts "Boot - Connecting to the SuperCollider server..."
-
       boot_s = OSC::UDPServer.new(0) do |a, b|
-        puts "Boot - Receiving ack from scsynth"
         p2.deliver! true unless connected
         connected = true
       end
@@ -234,7 +230,6 @@ module SonicPi
         __system_thread_locals.set_local(:sonic_pi_local_thread_group, :scsynth_external_boot_ack)
         Kernel.loop do
           begin
-            puts "Boot - Sending /status to server: #{@hostname}:#{@send_port}"
             boot_s.send(@hostname, @send_port, "/status")
           rescue Exception => e
             puts "Boot - Error sending /status to server: #{e.message}"
@@ -256,8 +251,6 @@ module SonicPi
         puts "Boot - Unable to connect to SuperCollider"
         raise "Boot - Unable to connect to SuperCollider"
       end
-
-      puts "Boot - Server connection established"
     end
 
     def boot_server_osx
