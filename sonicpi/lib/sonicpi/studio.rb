@@ -66,7 +66,6 @@ module SonicPi
       # Start Erlang
       begin
         erlang_cmd = "#{erlang_boot_path} -pz \"#{erlang_server_path}\" -s pi_server start #{@erlang_port}"
-        STDOUT.puts erlang_cmd
         @erlang_pid = spawn erlang_cmd, out: erlang_log_path, err: erlang_log_path
         register_process(@erlang_pid)
       rescue Exception => e
@@ -611,13 +610,10 @@ module SonicPi
 
 
     def reset_and_setup_groups_and_busses
-      log_message "Studio - clearing scsynth"
       @server.reset!
 
-      log_message "Studio - allocating audio bus"
       @mixer_bus = @server.allocate_audio_bus
 
-      log_message "Studio - Create Base Synth Groups"
       @mixer_group = @server.create_group(:head, 0, "STUDIO-MIXER")
       @fx_group = @server.create_group(:before, @mixer_group, "STUDIO-FX")
       @synth_group = @server.create_group(:before, @fx_group, "STUDIO-SYNTHS")
@@ -625,7 +621,6 @@ module SonicPi
     end
 
     def reset_server
-      log_message "Resetting server"
       reset_and_setup_groups_and_busses
       start_mixer
       start_scope
@@ -635,13 +630,11 @@ module SonicPi
       # TODO create a way of swapping these on the fly:
       # set_mixer! :basic
       # set_mixer! :default
-      log_message "Starting mixer"
       mixer_synth = raspberry_pi_1? ? "sonic-pi-basic_mixer" : "sonic-pi-mixer"
       @mixer = @server.trigger_synth(:head, @mixer_group, mixer_synth, {"in_bus" => @mixer_bus.to_i}, nil, true)
     end
 
     def start_scope
-      log_message "Starting scope"
       scope_synth = "sonic-pi-scope"
       @scope = @server.trigger_synth(:head, @monitor_group, scope_synth, { "max_frames" => 1024 })
     end
@@ -674,8 +667,7 @@ module SonicPi
       success = true
       begin
         m2o_spawn_cmd = "'#{osmid_m2o_path}'" + " -b -o #{@midi_osc_in_port} -m 6 'Sonic Pi'"
-        Kernel.puts "Studio - Spawning m2o with:"
-        Kernel.puts "    #{m2o_spawn_cmd}"
+        Kernel.puts "#{m2o_spawn_cmd}"
         @m2o_pid = spawn(m2o_spawn_cmd, out: osmid_m2o_log_path, err: osmid_m2o_log_path)
         register_process(@m2o_pid)
       rescue Exception => e
@@ -693,8 +685,7 @@ module SonicPi
       success = true
       begin
         o2m_spawn_cmd = "'#{osmid_o2m_path}'" + " -b -i #{@midi_osc_out_port} -O #{@midi_osc_in_port} -m 6"
-        Kernel.puts "Studio - Spawning o2m with:"
-        Kernel.puts "    #{o2m_spawn_cmd}"
+        Kernel.puts "#{o2m_spawn_cmd}"
         @o2m_pid = spawn(o2m_spawn_cmd, out: osmid_o2m_log_path, err: osmid_o2m_log_path)
         register_process(@o2m_pid)
       rescue Exception => e
