@@ -1,1 +1,1 @@
-native/osx/ruby/bin/ruby -W0 bin/sonic-pi-server.rb
+RUBY_DEP_GEM_SILENCE_WARNINGS=1 native/osx/ruby/bin/ruby -W0 bin/run.rb
