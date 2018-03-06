@@ -27,6 +27,19 @@ module SonicPi
       include SonicPi::Lang::Support::DocSystem
       include SonicPi::Util
 
+      class Array
+        def rot(n)
+          rotate(n)
+        end
+        def each_tick(thing)
+          self.each{|c|
+            #tick(thing)
+            yield c
+          }
+        end
+      end
+
+
       class SonicPiError < StandardError ; end
       class AssertionError < SonicPiError ; end
       class TimingError < SonicPiError ; end
