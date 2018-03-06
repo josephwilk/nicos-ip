@@ -446,7 +446,7 @@ module SonicPi
       id = id.to_s
       raise "Aborting load: file name is blank" if  id.empty?
       path = project_path + id + '.spi'
-      s = "# Welcome to Sonic Pi #{@version.to_s}\n\n"
+      s = "# Welcome to Nicosip\n\n"
       if File.exist? path
         s = IO.read(path)
       end
@@ -1171,11 +1171,9 @@ module SonicPi
         end
       end
 
-      __info "Welcome to Sonic Pi [Corrupted]", 1
-
-      __info "Running on Ruby v#{RUBY_VERSION}"
-
-      __info "Initialised Erlang OSC Scheduler"
+      __info "d[^_^]b", 1
+      __info "Running corrupted Ruby v#{RUBY_VERSION}"
+      __info "Erlang something something."
 
       if safe_mode?
         __info "!!WARNING!! - file permissions issue:\n   Unable to write to folder #{home_dir} \n   Booting in SAFE MODE.\n   Buffer auto-saving is disabled, please save your work manually.", 1

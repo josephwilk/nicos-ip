@@ -176,7 +176,7 @@ module SonicPi
 
     def init_scsynth
       @server = Server.new(@scsynth_port, @scsynth_send_port, @msg_queue, @state, @register_cue_event_lambda)
-      message "Initialised SuperCollider Audio Server #{@server.version}"
+      message "SuperCollider POWERED ON #{@server.version}"
     end
 
     def init_studio
