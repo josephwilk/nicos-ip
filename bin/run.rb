@@ -37,6 +37,15 @@ require 'memoist'
 
 include SonicPi::Util
 
+class Array
+def each_tick(thing,&block)
+    self.each{|c|
+      tick(thing)
+      block.(c)
+    }
+  end
+end
+
 protocol = case ARGV[0]
            when "-t"
              :tcp
