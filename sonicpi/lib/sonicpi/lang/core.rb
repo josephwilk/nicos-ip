@@ -4461,7 +4461,7 @@ puts current_sched_ahead_time # Prints 0.5"]
               __schedule_delayed_blocks_and_messages!
             rescue Stop => e
               if name
-                __info("Stopping thread #{name.inspect}")
+                #__info("Stopping thread #{name.inspect}")
               else
                 __delayed_message("Stopped internal thread")
               end
