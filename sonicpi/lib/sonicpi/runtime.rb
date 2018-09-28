@@ -31,6 +31,7 @@ require_relative "thread_id"
 
 #require_relative "oscevent"
 #require_relative "stream"
+require 'fileutils'
 
 require 'net/http'
 require 'uri'
@@ -445,7 +446,7 @@ module SonicPi
     def __load_buffer(id)
       id = id.to_s
       raise "Aborting load: file name is blank" if  id.empty?
-      path = project_path + id + '.spi'
+      path = project_path + id #+ '.spi'
       s = "# Welcome to Nicosip\n\n"
       if File.exist? path
         s = IO.read(path)
@@ -1157,10 +1158,12 @@ module SonicPi
         Kernel.loop do
           event = @save_queue.pop
           id, content = *event
-          filename = id + '.spi'
+          filename = id #+ '.spi'
           path = project_path + "/" + filename
           content = filter_for_save(content)
+
           begin
+            FileUtils.mkdir_p(File.dirname(path))
             File.open(path, 'w') {|f| f.write(content) }
             @gitsave.save!(filename, content, "#{@version} -- #{@session_id} -- ")
           rescue Exception => e
