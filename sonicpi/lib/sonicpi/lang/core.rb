@@ -1794,10 +1794,10 @@ end"
         "(line 0, 3, inclusive: true) #=> (ring 0.0, 1.0, 2.0, 3.0)"
       ]
 
-      def ine(start, finish, *args)
+      def flow(start, finish, *args)
         line(start, finish, *args)
       end
-      doc name:           :ine,
+      doc name:           :flow,
           introduced:     Version.new(2,5,0),
           summary:        "Create a ring buffer representing a straight line",
           args:           [[:start, :number], [:finish, :number]],
@@ -1808,8 +1808,8 @@ end"
           memoize: true,
           doc:            "Create a ring buffer representing a straight line between start and finish of num_slices elements. Num slices defaults to `8`. Indexes wrap around positively and negatively. Similar to `range`.",
           examples:       [
-        "(ine 0 4 4)    #=> (ring 0.0, 1.0, 2.0, 3.0)",
-        "(ine 5 0 5)    #=> (ring 5.0, 4.0, 3.0, 2.0, 1.0)"
+        "(flow 0 4 4)    #=> (ring 0.0, 1.0, 2.0, 3.0)",
+        "(flow 5 0 5)    #=> (ring 5.0, 4.0, 3.0, 2.0, 1.0)"
       ]
 
       def halves(start, num_halves=1)
@@ -1916,10 +1916,10 @@ end"
         "(ring 1, 2, 3)[-1] #=> 3",
       ]
 
-      def ing(*args)
+      def vec(*args)
         ring(*args)
       end
-      doc name:           :ing,
+      doc name:           :vec,
           introduced:     Version.new(2,2,0),
           summary:        "Create a ring buffer",
           args:           [[:list, :array]],
@@ -1928,10 +1928,10 @@ end"
           accepts_block:  false,
           doc:            "Create a new immutable ring buffer from args. Indexes wrap around positively and negatively",
           examples:       [
-        "(ing 1 2 3)[0] #=> 1",
-        "(ing 1 2 3)[1] #=> 2",
-        "(ing 1 2 3)[3] #=> 1",
-        "(ing 1 2 3)[-1] #=> 3",
+        "(vec 1 2 3)[0] #=> 1",
+        "(vec 1 2 3)[1] #=> 2",
+        "(vec 1 2 3)[3] #=> 1",
+        "(vec 1 2 3)[-1] #=> 3",
       ]
 
       def map(*args)

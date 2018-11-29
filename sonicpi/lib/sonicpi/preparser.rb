@@ -20,7 +20,7 @@ module SonicPi
 
     def self.comma_less(rb)
       #Failure cases: (ing (chord :A1)) - Matches the first ) rather than the last.
-      ings = rb.scan(/(\(ing\s+|\(nit\s+|\(ine\s+)([^\)]+)(\))/)
+      ings = rb.scan(/(\(vec\s+|\(nit\s+|\(flow\s+)([^\)]+)(\))/)
       ings.each do |ing|
         target = ing[1].gsub(/,/, " ").gsub(/([^\s]+)/, "\\1,")
         new_ings = ing[0] + target + ing[2]
@@ -58,7 +58,7 @@ module SonicPi
       rb.gsub!(/%b{([^}]+)}/,"{\\1=>:bitcrusher}")
       rb.gsub!(/%d{([^}]+)}/,"{\\1=>:distortion}")
       rb.gsub!(/%p{([^}]+)}/,"{\\1=>:pitch_shift}")
-      rb.gsub!(/%k{([^}]+)}/,"{\\1=>:krush}")  
+      rb.gsub!(/%k{([^}]+)}/,"{\\1=>:krush}")
       rb
     end
   end
