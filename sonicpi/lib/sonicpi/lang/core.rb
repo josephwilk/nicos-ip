@@ -1543,6 +1543,23 @@ end"
         "(stretch [:e2, :c3], 1, [:c2, :d3], 2) #=> (ring :e2, :c3, :c2, :c2, :d3, :d3)"
       ]
 
+      def cycle_rep(*args)
+        knit(*args)
+      end
+      doc name:           :cycle_rep,
+          introduced:     Version.new(2,2,0),
+          summary:        "Knit a sequence of repeated values",
+          args:           [[:value, :anything], [:count, :number]],
+          returns:        :ring,
+          opts:           nil,
+          accepts_block:  false,
+          doc:            "Knits a series of value, count pairs to create a ring buffer where each value is repeated count times.",
+          examples:       [
+        "(cycle_rep 1 5)    #=> (ring 1, 1, 1, 1, 1)",
+        "(cycle_rep :e2 2 :c2 3) #=> (ring :e2, :e2, :c2, :c2, :c2)"
+      ]
+
+
       def nit(*args)
         knit(*args)
       end
@@ -1932,6 +1949,24 @@ end"
         "(vec 1 2 3)[1] #=> 2",
         "(vec 1 2 3)[3] #=> 1",
         "(vec 1 2 3)[-1] #=> 3",
+      ]
+
+      def cycle(*args)
+        ring(*args)
+      end
+      doc name:           :cycle,
+          introduced:     Version.new(2,2,0),
+          summary:        "Create a ring buffer",
+          args:           [[:list, :array]],
+          returns:        :ring,
+          opts:           nil,
+          accepts_block:  false,
+          doc:            "Create a new immutable ring buffer from args. Indexes wrap around positively and negatively",
+          examples:       [
+        "(cycle 1 2 3)[0] #=> 1",
+        "(cycle 1 2 3)[1] #=> 2",
+        "(cycle 1 2 3)[3] #=> 1",
+        "(cycle 1 2 3)[-1] #=> 3",
       ]
 
       def map(*args)

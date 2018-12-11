@@ -20,7 +20,7 @@ module SonicPi
 
     def self.comma_less(rb)
       #Failure cases: (ing (chord :A1)) - Matches the first ) rather than the last.
-      ings = rb.scan(/(\(vec\s+|\(nit\s+|\(flow\s+)([^\)]+)(\))/)
+      ings = rb.scan(/(\(cycle\s+|\(cycle_rep\s+|\(flow\s+)([^\)]+)(\))/)
       ings.each do |ing|
         target = ing[1].gsub(/,/, " ").gsub(/([^\s]+)/, "\\1,")
         new_ings = ing[0] + target + ing[2]
